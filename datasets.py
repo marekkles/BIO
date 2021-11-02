@@ -17,7 +17,7 @@ class Dataset1(VisionDataset):
             assert "err"
         
 
-        self.objs = list(filter(os.path.isdir, [os.path.join(root, d) for d in os.listdir(root)]))
+        self.objs = list(filter(os.path.isdir, [os.path.join(root, d) for d in os.listdir(root)])).sort()
 
         self.images = []
         self.targets = []
@@ -33,8 +33,7 @@ class Dataset1(VisionDataset):
         Args:
             index (int): Index
         Returns:
-            tuple: (image, target) where target is a tuple of all target types if target_type is a list with more
-            than one item. Otherwise target is a json object if target_type="polygon", else the image segmentation.
+            tuple: (image, target) where target is a tuple of all target types
         """
 
         image = Image.open(self.images[index]).convert('RGB')
@@ -89,8 +88,7 @@ class Dataset2(VisionDataset):
         Args:
             index (int): Index
         Returns:
-            tuple: (image, target) where target is a tuple of all target types if target_type is a list with more
-            than one item. Otherwise target is a json object if target_type="polygon", else the image segmentation.
+            tuple: (image, target) where target is a tuple of all target types
         """
 
         image = Image.open(self.images[index]).convert('RGB')
