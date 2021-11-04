@@ -16,15 +16,16 @@ class Dataset1(VisionDataset):
         if split not in ("train", "test"):
             assert "err"
         
-
-        self.objs = list(filter(os.path.isdir, [os.path.join(root, d) for d in os.listdir(root)])).sort()
-
+        self.objs = list(filter(os.path.isdir, [os.path.join(root, d) for d in os.listdir(root)]))
+        self.objs.sort()
         self.images = []
         self.targets = []
         self.target_type = ("idk", "idk2", "idk3")
 
+
         for obj in self.objs:
-            files = [os.path.join(obj, f) for f in os.listdir(obj)].sort()
+            files = [os.path.join(obj, f) for f in os.listdir(obj)]
+            files.sort()
             self.images.append(files[-1])
             self.targets.append(files[:-1])
             
@@ -72,16 +73,24 @@ class Dataset2(VisionDataset):
 
         if split not in dataset_path:
             assert "err"
-        
 
-        self.images = os.listdir(os.path.join(root, "A. Segmentation", "1. Original Images", dataset_path[split] ) ).sort()
+
+        self.images = os.listdir(os.path.join(root, "A. Segmentation", "1. Original Images", dataset_path[split] ) )
+        self.images = [ os.path.join(root, "A. Segmentation", "1. Original Images", dataset_path[split], f) for f in self.images]
+        self.images.sort()
+
         self.targets = {
-            "Microaneurisms"  : os.listdir( os.path.join(root , "A. Segmentation" , "2. All Segmentation Groundtruths" , dataset_path[split] , "1. Microaneurysms") ).sort(),
-            "Heamorrahages"   : os.listdir( os.path.join(root , "A. Segmentation" , "2. All Segmentation Groundtruths" , dataset_path[split] , "2. Haemorrhages"  ) ).sort(),
-            "Hard Extrudates" : os.listdir( os.path.join(root , "A. Segmentation" , "2. All Segmentation Groundtruths" , dataset_path[split] , "3. Hard Exudates" ) ).sort(),
-            "Soft Extrudates" : os.listdir( os.path.join(root , "A. Segmentation" , "2. All Segmentation Groundtruths" , dataset_path[split] , "4. Soft Exudates" ) ).sort(),
-            "Optic Disc"      : os.listdir( os.path.join(root , "A. Segmentation" , "2. All Segmentation Groundtruths" , dataset_path[split] , "5. Optic Disc"    ) ).sort(),
+            "1. Microaneurysms" : None,
+            "2. Haemorrhages"   : None,
+            "3. Hard Exudates"  : None,
+            "4. Soft Exudates"  : None,
+            "5. Optic Disc"     : None,
         }
+
+        for t in self.targets:
+            self.targets[t] = os.listdir( os.path.join(root , "A. Segmentation" , "2. All Segmentation Groundtruths" , dataset_path[split] , t) )
+            self.targets[t] = [ os.path.join(root , "A. Segmentation" , "2. All Segmentation Groundtruths" , dataset_path[split] , t, f) for f in self.targets[t]]
+            self.targets[t].sort()
 
     def __getitem__(self, index: int) -> Tuple[Any, Any]:
         """
