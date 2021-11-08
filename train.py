@@ -7,14 +7,12 @@ import torch.utils.data
 from torch import nn
 import torchvision
 
-from .datasets import Dataset1, Dataset2
+from datasets import Dataset1, Dataset2
 import presets
 import utils
 
 
 def get_dataset(dir_path, name, image_set, transform):
-    def sbd(*args, **kwargs):
-        return torchvision.datasets.SBDataset(*args, mode='segmentation', **kwargs)
     paths = {
         "dataset1": (dir_path, Dataset1, 3),
         "dataset2": (dir_path, Dataset2, 5)
@@ -183,7 +181,7 @@ def get_args_parser(add_help=True):
     parser.add_argument('--dataset', default='dataset1', help='dataset name (dataset1 or dataset2)')
     parser.add_argument('--model', default='fcn_resnet101', help='model')
     parser.add_argument('--aux-loss', action='store_true', help='auxiliar loss')
-    parser.add_argument('--device', default='cuda', help='device')
+    parser.add_argument('--device', default='cpu', help='device')
     parser.add_argument('-b', '--batch-size', default=8, type=int)
     parser.add_argument('--epochs', default=30, type=int, metavar='N',
                         help='number of total epochs to run')
