@@ -37,7 +37,11 @@ class RandomResize(object):
     def __call__(self, image, target):
         size = random.randint(self.min_size, self.max_size)
         image = F.resize(image, size)
-        target = F.resize(target, size, interpolation=Image.NEAREST)
+        if isinstance(target, tuple):
+            target_prime = [ F.resize(t, size, interpolation=Image.NEAREST) for t in target ]
+            target = tuple(target_prime)
+        else:
+            target = F.resize(target, size, interpolation=Image.NEAREST)
         return image, target
 
 
@@ -48,7 +52,11 @@ class RandomHorizontalFlip(object):
     def __call__(self, image, target):
         if random.random() < self.flip_prob:
             image = F.hflip(image)
-            target = F.hflip(target)
+            if isinstance(target, tuple):
+                target_prime = [F.hflip(t) for t in target]
+                target = tuple(target_prime)
+            else:
+                target = F.hflip(target)
         return image, target
 
 
@@ -58,10 +66,15 @@ class RandomCrop(object):
 
     def __call__(self, image, target):
         image = pad_if_smaller(image, self.size)
-        target = pad_if_smaller(target, self.size, fill=255)
         crop_params = T.RandomCrop.get_params(image, (self.size, self.size))
         image = F.crop(image, *crop_params)
-        target = F.crop(target, *crop_params)
+
+        if isinstance(target, tuple):
+            target_prime = [ pad_if_smaller(t, self.size, fill=255) for t in target]
+            target_prime = [F.crop(t, *crop_params) for t in target_prime] 
+            target = tuple(target_prime) 
+        else:
+            target = F.crop(target, *crop_params)
         return image, target
 
 
@@ -71,14 +84,22 @@ class CenterCrop(object):
 
     def __call__(self, image, target):
         image = F.center_crop(image, self.size)
-        target = F.center_crop(target, self.size)
+        
+        if isinstance(target, tuple):
+            target_prime = [F.center_crop(t, self.size) for t in target]
+            target = tuple(target_prime)
+        else:
+            target = F.center_crop(target, self.size)
         return image, target
 
 
 class ToTensor(object):
     def __call__(self, image, target):
         image = F.to_tensor(image)
-        target = torch.as_tensor(np.array(target), dtype=torch.int64)
+        if isinstance(target, tuple):
+            target = torch.as_tensor(np.array( [np.array(t)  for t in target]), dtype=torch.int64)
+        else:
+            target = torch.as_tensor(np.array(target), dtype=torch.int64)
         return image, target
 
 

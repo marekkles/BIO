@@ -1,4 +1,5 @@
 from torchvision.datasets.vision import *
+import torch
 from PIL import Image
 
 
@@ -13,7 +14,7 @@ class Dataset1(VisionDataset):
     ) -> None:
         super().__init__(root, transforms=transforms, transform=transform, target_transform=target_transform)
         
-        if image_set not in ("train", "test"):
+        if image_set not in ("train", "val"):
             assert "err"
         
         self.objs = list(filter(os.path.isdir, [os.path.join(root, d) for d in os.listdir(root)]))
@@ -68,7 +69,7 @@ class Dataset2(VisionDataset):
         
         dataset_path = {
             "train" : "a. Training Set",
-            "test" : "b. Testing Set"
+            "val" : "b. Testing Set"
         }
 
         if image_set not in dataset_path:
@@ -117,3 +118,16 @@ class Dataset2(VisionDataset):
     def __len__(self) -> int:
         return len(self.images)
 
+if __name__ == '__main__':
+    from presets import SegmentationPresetTrain
+    from matplotlib.pyplot import imshow
+    import numpy as np
+    trans = SegmentationPresetTrain(520, 480)
+
+    xx = ( Image.new('P', (1000, 1000)) ,Image.new('P', (1000, 1000)) )
+
+    img, target = trans(Image.new('RGB', (1000, 1000)), xx )
+    ds1 = Dataset1("../BIO_data/DB_UoA", transform=trans)
+    print(len(ds1))
+    imshow(np.asarray(ds1[0][1]))
+    ds1[0]

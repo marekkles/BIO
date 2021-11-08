@@ -7,7 +7,7 @@ import torch.utils.data
 from torch import nn
 import torchvision
 
-from coco_utils import get_coco
+from .datasets import Dataset1, Dataset2
 import presets
 import utils
 
@@ -16,9 +16,8 @@ def get_dataset(dir_path, name, image_set, transform):
     def sbd(*args, **kwargs):
         return torchvision.datasets.SBDataset(*args, mode='segmentation', **kwargs)
     paths = {
-        "voc": (dir_path, torchvision.datasets.VOCSegmentation, 21),
-        "voc_aug": (dir_path, sbd, 21),
-        "coco": (dir_path, get_coco, 21)
+        "dataset1": (dir_path, Dataset1, 3),
+        "dataset2": (dir_path, Dataset2, 5)
     }
     p, ds_fn, num_classes = paths[name]
 
@@ -180,8 +179,8 @@ def get_args_parser(add_help=True):
     import argparse
     parser = argparse.ArgumentParser(description='PyTorch Segmentation Training', add_help=add_help)
 
-    parser.add_argument('--data-path', default='/datasets01/COCO/022719/', help='dataset path')
-    parser.add_argument('--dataset', default='coco', help='dataset name')
+    parser.add_argument('--data-path', default='../BIO_data/Database/', help='dataset path')
+    parser.add_argument('--dataset', default='dataset1', help='dataset name (dataset1 or dataset2)')
     parser.add_argument('--model', default='fcn_resnet101', help='model')
     parser.add_argument('--aux-loss', action='store_true', help='auxiliar loss')
     parser.add_argument('--device', default='cuda', help='device')
