@@ -124,10 +124,12 @@ if __name__ == '__main__':
     import numpy as np
     trans = SegmentationPresetTrain(520, 480)
 
+    i = Image.new('RGB', (1000, 1000))
     xx = ( Image.new('P', (1000, 1000)) ,Image.new('P', (1000, 1000)) )
 
-    img, target = trans(Image.new('RGB', (1000, 1000)), xx )
-    ds1 = Dataset1("../BIO_data/DB_UoA", transform=trans)
+    img, target = trans( i, xx )
+    imshow(img[0])
+    ds1 = Dataset1("../BIO_data/DB_UoA", transforms=trans)
     print(len(ds1))
     imshow(np.asarray(ds1[0][1]))
     ds1[0]
