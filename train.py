@@ -7,15 +7,14 @@ import torch.utils.data
 from torch import nn
 import torchvision
 
-from datasets import Dataset1, Dataset2
+from datasets import Dataset0
 import presets
 import utils
 
 
 def get_dataset(dir_path, name, image_set, transform):
     paths = {
-        "dataset1": (dir_path, Dataset1, 3),
-        "dataset2": (dir_path, Dataset2, 5)
+        "dataset0": (dir_path, Dataset0, 3)
     }
     p, ds_fn, num_classes = paths[name]
 
@@ -24,8 +23,8 @@ def get_dataset(dir_path, name, image_set, transform):
 
 
 def get_transform(train):
-    base_size = 520
-    crop_size = 480
+    base_size = 100
+    crop_size = 100
 
     return presets.SegmentationPresetTrain(base_size, crop_size) if train else presets.SegmentationPresetEval(base_size)
 
@@ -33,7 +32,7 @@ def get_transform(train):
 def criterion(inputs, target):
     losses = {}
     for name, x in inputs.items():
-        losses[name] = nn.functional.cross_entropy(x, target, ignore_index=255)
+        losses[name] = nn.functional.cross_entropy(x, target)
 
     if len(losses) == 1:
         return losses['out']
@@ -177,8 +176,8 @@ def get_args_parser(add_help=True):
     import argparse
     parser = argparse.ArgumentParser(description='PyTorch Segmentation Training', add_help=add_help)
 
-    parser.add_argument('--data-path', default='../BIO_data/Database/', help='dataset path')
-    parser.add_argument('--dataset', default='dataset2', help='dataset name (dataset1 or dataset2)')
+    parser.add_argument('--data-path', default='../BIO_data/RetinaDataset/', help='dataset path')
+    parser.add_argument('--dataset', default='dataset0', help='dataset name (dataset1 or dataset2)')
     parser.add_argument('--model', default='fcn_resnet101', help='model')
     parser.add_argument('--aux-loss', action='store_true', help='auxiliar loss')
     parser.add_argument('--device', default='cpu', help='device')

@@ -38,10 +38,10 @@ class RandomResize(object):
         size = random.randint(self.min_size, self.max_size)
         image = F.resize(image, size)
         if isinstance(target, tuple):
-            target_prime = [ F.resize(t, size, interpolation=Image.NEAREST) for t in target ]
+            target_prime = [ F.resize(t, size, interpolation=F.InterpolationMode.NEAREST) for t in target ]
             target = tuple(target_prime)
         else:
-            target = F.resize(target, size, interpolation=Image.NEAREST)
+            target = F.resize(target, size, interpolation=F.InterpolationMode.NEAREST)
         return image, target
 
 
