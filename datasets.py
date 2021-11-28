@@ -23,7 +23,7 @@ class Dataset0(VisionDataset):
             assert "err"
         
         dataset_dir = os.path.join(root, image_sets[image_set])
-        default_txt = os.path.join(dataset_dir, 'ImageSets/Segmentation/default.txt')
+        default_txt = os.path.join(dataset_dir, 'ImageSets','Segmentation','default.txt')
 
         self.objs = []
         with open(default_txt, 'r') as f:
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
     img, target = trans( i, xx )
     imshow(img[0])
-    ds1 = Dataset0("../BIO_data/RetinaDataset", transforms=trans)
+    ds1 = Dataset0(os.path.join('..', 'BIO_data', 'RetinaDataset'), transforms=trans)
     print(len(ds1))
     item = ds1[0]
     imshow(np.asarray(item[0][0]))
