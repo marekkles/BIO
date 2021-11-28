@@ -99,7 +99,7 @@ class ToTensor(object):
         if isinstance(target, tuple):
             target = torch.as_tensor(np.array( [np.array(t)  for t in target]), dtype=torch.int64)
         else:
-            target = torch.as_tensor(np.array(target), dtype=torch.int64)
+            target = F.to_tensor(target)
         return image, target
 
 

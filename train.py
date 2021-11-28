@@ -178,7 +178,7 @@ def get_args_parser(add_help=True):
     parser = argparse.ArgumentParser(description='PyTorch Segmentation Training', add_help=add_help)
 
     parser.add_argument('--data-path', default='../BIO_data/Database/', help='dataset path')
-    parser.add_argument('--dataset', default='dataset1', help='dataset name (dataset1 or dataset2)')
+    parser.add_argument('--dataset', default='dataset2', help='dataset name (dataset1 or dataset2)')
     parser.add_argument('--model', default='fcn_resnet101', help='model')
     parser.add_argument('--aux-loss', action='store_true', help='auxiliar loss')
     parser.add_argument('--device', default='cpu', help='device')
