@@ -52,6 +52,8 @@ class Dataset0(VisionDataset):
         if self.transforms is not None:
             image, target = self.transforms(image, target)
 
+        target[2] = (1.0 - target[0] - target[1])
+
         return image, target
 
     def __len__(self) -> int:
