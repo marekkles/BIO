@@ -51,7 +51,7 @@ def evaluate(model, data_loader, device, num_classes):
             output = model(image)
             output = output['out']
 
-            confmat.update(target.argmax(1).flatten(), output.argmax(1).flatten())
+            confmat.update(target.flatten(), output.argmax(1).flatten())
         confmat.reduce_from_all_processes()
 
     return confmat
@@ -177,14 +177,14 @@ def get_args_parser(add_help=True):
 
     parser.add_argument('--data-path', default='../BIO_data/RetinaDataset/', help='dataset path')
     parser.add_argument('--dataset', default='dataset0', help='dataset name (dataset1 or dataset2)')
-    parser.add_argument('--model', default='fcn_resnet101', help='model')
+    parser.add_argument('--model', default='lraspp_mobilenet_v3_large', help='model')
     parser.add_argument('--aux-loss', action='store_true', help='auxiliar loss')
     parser.add_argument('--device', default='cpu', help='device')
     parser.add_argument('-b', '--batch-size', default=8, type=int)
     parser.add_argument('--epochs', default=30, type=int, metavar='N',
                         help='number of total epochs to run')
 
-    parser.add_argument('-j', '--workers', default=16, type=int, metavar='N',
+    parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
                         help='number of data loading workers (default: 16)')
     parser.add_argument('--lr', default=0.01, type=float, help='initial learning rate')
     parser.add_argument('--momentum', default=0.9, type=float, metavar='M',

@@ -52,7 +52,9 @@ class Dataset0(VisionDataset):
         if self.transforms is not None:
             image, target = self.transforms(image, target)
 
-        target[2] = (1.0 - target[0] - target[1])
+        target[2] = (1.0 * (1.0-target[0]) * (1.0-target[1]))
+
+        target = target.argmax(0)
 
         return image, target
 
