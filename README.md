@@ -10,7 +10,7 @@ Marek Vaško  (xvasko16)
 
 Zdrojové kódy projektu sú založené na referenčných zdrojových kódov pre trénovanie konvolúčnych neurónových sietí pre sémantickú segmentáciu v projekte  [PyTorch torchvision](https://github.com/pytorch/vision/tree/main/references/segmentation). Zdrojové kódy sú distribuované pod licenciou BSD-3, ktorá je využitá rovnako pre zdrojové kódy tohto projektu.
 
-Predtrénované modely sú prístupné na stiahnutie z [úložiska Google Drive](). Výsledky pre jednotlivé modely na testovasích dátach sú prístupné v súbore `test_results.txt`.
+Predtrénované modely sú prístupné na stiahnutie z [úložiska Google Drive](https://drive.google.com/drive/folders/1LnIV7xp0ZnXbTtM0NGWiF6KvDoxT1JyO?usp=sharing). Prístup na úložisko je možný s **Google VUT** účtom. Výsledky pre jednotlivé modely na testovasích dátach sú prístupné v súbore `test_results.txt`.
 
 Pre získanie testovacích výsledkov boli využité príkazy, predpokladá sa umiestnenie datasetu v priečinku `../BIO_data/RetinaDataset/`
 
@@ -24,7 +24,7 @@ Pre trénovanie iných modelov odporúčame odkaz na torchvision a príkaz `pyth
 
 Pre ukážku inferencie je možné využiť Python Notebook `inference.ipynb`.
 
-Dataset je prístupný na odkaze [na úložisku Google Drive]()
+Dataset je prístupný na odkaze [na úložisku Google Drive](https://drive.google.com/drive/folders/1LnIV7xp0ZnXbTtM0NGWiF6KvDoxT1JyO?usp=sharing), prístup na úložisko je možný s **Google VUT** účtom.
 
 
 
