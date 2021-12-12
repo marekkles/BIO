@@ -1,0 +1,37 @@
+python3 train.py --model deeplabv3_resnet101 --resume Deeplabv3_Resnet10-30epochs/checkpoint.pth --test-only
+
+Not using distributed mode
+Namespace(aux_loss=False, batch_size=8, data_path='../BIO_data/RetinaDataset/', dataset='dataset0', device='cpu', dist_url='env://', distributed=False, epochs=30, lr=0.01, model='deeplabv3_resnet101', momentum=0.9, output_dir='.', pretrained=False, print_freq=10, resume='Deeplabv3_Resnet10-30epochs/checkpoint.pth', start_epoch=0, test_only=True, weight_decay=0.0001, workers=4, world_size=1)
+Test:  [  0/102]  eta: 0:02:32    time: 1.4961  data: 0.5837
+Test:  [100/102]  eta: 0:00:01    time: 0.4083  data: 0.0012
+Test: Total time: 0:00:51
+global correct: 98.0
+average row correct: ['99.7', '89.7', '98.0']
+IoU: ['61.6', '26.0', '97.9']
+mean IoU: 61.9
+
+
+python3 train.py --model fcn_resnet101 --resume ResNet101-30epochs/checkpoint.pth --test-only
+
+Not using distributed mode
+Namespace(aux_loss=False, batch_size=8, data_path='../BIO_data/RetinaDataset/', dataset='dataset0', device='cpu', dist_url='env://', distributed=False, epochs=30, lr=0.01, model='fcn_resnet101', momentum=0.9, output_dir='.', pretrained=False, print_freq=10, resume='ResNet101-30epochs/checkpoint.pth', start_epoch=0, test_only=True, weight_decay=0.0001, workers=4, world_size=1)
+Test:  [  0/102]  eta: 0:02:25    time: 1.4252  data: 0.5700
+Test:  [100/102]  eta: 0:00:00    time: 0.3692  data: 0.0013
+Test: Total time: 0:00:42
+global correct: 99.2
+average row correct: ['92.1', '41.6', '99.6']
+IoU: ['77.5', '32.5', '99.2']
+mean IoU: 69.7
+
+
+python3 train.py --model lraspp_mobilenet_v3_large --resume MobileNetV3-50epoch/checkpoint.pth --test-only
+
+Not using distributed mode
+Namespace(aux_loss=False, batch_size=8, data_path='../BIO_data/RetinaDataset/', dataset='dataset0', device='cpu', dist_url='env://', distributed=False, epochs=30, lr=0.01, model='lraspp_mobilenet_v3_large', momentum=0.9, output_dir='.', pretrained=False, print_freq=10, resume='MobileNetV3-50epoch/checkpoint.pth', start_epoch=0, test_only=True, weight_decay=0.0001, workers=4, world_size=1)
+Test:  [  0/102]  eta: 0:01:15    time: 0.7417  data: 0.5688
+Test:  [100/102]  eta: 0:00:00    time: 0.1174  data: 0.0614
+Test: Total time: 0:00:14
+global correct: 99.2
+average row correct: ['83.8', '26.8', '99.7']
+IoU: ['74.0', '23.7', '99.2']
+mean IoU: 65.6
